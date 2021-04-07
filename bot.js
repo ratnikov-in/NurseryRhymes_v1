@@ -8,7 +8,8 @@ const Extra = require('telegraf/extra')
 // const {MenuTemplate, MenuMiddleware, createBackMainMenuButtons} = require('telegraf-inline-menu')
 // const {html: format} = require('telegram-format');
 // API TOKEN
-const token = '1700465901:AAEZcKslUKO5Uf3Too20XihhpPdXS9TLURY'
+// const token = '1700465901:AAEZcKslUKO5Uf3Too20XihhpPdXS9TLURY' ratnikov.tech
+const token = '1737945044:AAEcLweBalvnVJX-FNRRNmEO_qJbLOYXWHI'
 const bot = new Telegraf(token)
 // Сервисы взаимодействия с данными из БД
 const textService = require('./services/textService')
