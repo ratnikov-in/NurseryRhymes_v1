@@ -296,7 +296,8 @@ async function showSearchPage(ctx,page=1){
         kb.push([{text:'⭐️ Random', callback_data:'random'}])
         kb.push([{text:'🔍 Search', callback_data:'search'}])
         kb.push([{text:'🏫 Home', callback_data:'home'}])
-        await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMarkdown,{
+        if (!ctx.callbackQuery) return ctx.replyWithHTML(textMarkdown,{reply_markup:{inline_keyboard:kb}})
+        else await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMarkdown,{
             reply_markup:{
                 inline_keyboard:kb},
                 parse_mode: 'markdown'

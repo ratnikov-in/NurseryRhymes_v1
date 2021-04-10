@@ -21,6 +21,7 @@ const utils = require('./utils');
 
 const mainMenuTextDenied = (ctx) => `Dear ${ctx.from.username} you don't access from bot.\n`
 const mainMenuTextAccess = (ctx) => `Dear ${ctx.from.username} search for nursery rhymes.\n`
+//Основное меню
 const mainMenuButtons = [[]]
 mainMenuButtons.push([{text:'⭐️ Random', callback_data:'random'}])
 mainMenuButtons.push([{text:'🔍 Search', callback_data:'search'}])
