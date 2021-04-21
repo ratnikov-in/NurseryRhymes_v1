@@ -263,9 +263,7 @@ async function showText(ctx){
         kb.push([{text: '📄 Category', callback_data: 'category'}])
         await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMarkdown,{
             reply_markup:{
-                inline_keyboard:kb},
-                parse_mode: 'markdown'
-            })
+                inline_keyboard:kb}            })
     } else{
         let textMarkdown = utils.createTextMsgMarkdown(fText)
         console.log(textMarkdown);
@@ -274,9 +272,7 @@ async function showText(ctx){
         kb.push([{text: '📄 Category', callback_data: 'category'}])
         await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMarkdown,{
             reply_markup:{
-                inline_keyboard:kb},
-                parse_mode: 'markdown'
-            })
+                inline_keyboard:kb}            })
     }
     await ctx.answerCbQuery()
 }

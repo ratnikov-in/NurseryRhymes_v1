@@ -23,7 +23,7 @@ async function getUser(telegramId) {
     //Проверка что объект пришел
     if (!telegramId) return false
     //Получение пользователя
-    let result = await userModel.findOne({telegramId : telegramId})
+    let result = await userModel.findOne({telegramId : telegramId, active: true})
     if (!result) return false
     else return result
 }

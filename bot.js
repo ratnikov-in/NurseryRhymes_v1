@@ -40,44 +40,88 @@ bot.command('start', async (ctx) => {
 })
 
 bot.action('random', async ctx => {
-    const randomText = await textService.randomText()
-    const text = utils.createTextMsg(randomText)
-    const textMakdown = utils.createTextMsgMarkdown(randomText)
-    if (!ctx.callbackQuery) return ctx.replyWithHTML(text,{reply_markup:{inline_keyboard:mainMenuButtons}})
-	await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMakdown,
-        {reply_markup:
-            {inline_keyboard:mainMenuButtons},
-            parse_mode: "markdown"
-        })
-	ctx.answerCbQuery()
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        const randomText = await textService.randomText()
+        const text = utils.createTextMsg(randomText)
+        const textMakdown = utils.createTextMsgMarkdown(randomText)
+        if (!ctx.callbackQuery) return ctx.replyWithHTML(text,{reply_markup:{inline_keyboard:mainMenuButtons}})
+        await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMakdown,
+            {reply_markup:
+                {inline_keyboard:mainMenuButtons},
+                parse_mode: "markdown"
+            })
+        ctx.answerCbQuery()
+    }
 })
 bot.action('search', async ctx => {
-    const text = `Dear <strong>${ctx.from.username}</strong> for search please enter ?your word\n<b>Example</b>: <i>?Daddy</i> or <i>?Bee</i>`
-    const textMakdown = `Dear *${ctx.from.username}* for search please enter ?your word\n*Example*: _?Daddy_ or _?Bee_`
-    if (!ctx.callbackQuery) return ctx.replyWithHTML(text,{reply_markup:{inline_keyboard:mainMenuButtons}})
-	await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMakdown,
-        {reply_markup:
-            {inline_keyboard:mainMenuButtons},
-            parse_mode: "markdown"
-        })
-	ctx.answerCbQuery()
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        const text = `Dear <strong>${ctx.from.username}</strong> for search please enter ?your word\n<b>Example</b>: <i>?Daddy</i> or <i>?Bee</i>`
+        const textMakdown = `Dear *${ctx.from.username}* for search please enter ?your word\n*Example*: _?Daddy_ or _?Bee_`
+        if (!ctx.callbackQuery) return ctx.replyWithHTML(text,{reply_markup:{inline_keyboard:mainMenuButtons}})
+        await ctx.telegram.editMessageText(ctx.from.id,ctx.callbackQuery.message.message_id,null,textMakdown,
+            {reply_markup:
+                {inline_keyboard:mainMenuButtons},
+                parse_mode: "markdown"
+            })
+        ctx.answerCbQuery()
+    }
 })
 bot.action('category', async ctx => {
     await categoryService.showPage(ctx)
     return true
 })
-bot.action(/^listCategory(\d+)$/, async ctx => await categoryService.showPage(ctx,+ctx.match[1]))
-bot.action(/^categoryText/, async ctx => await textService.showPage(ctx))
-bot.action(/^textList/, async ctx => await textService.showPage(ctx,+ctx.match[1]))
-bot.action(/^rhyme/, async ctx => await textService.showText(ctx))
-bot.action(/^textSearchList/, async ctx => await textService.showSearchPage(ctx,+ctx.match[1]))
+bot.action(/^listCategory(\d+)$/, async ctx => {
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        await categoryService.showPage(ctx,+ctx.match[1])
+    }
+})
+bot.action(/^categoryText/, async ctx => {
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        await textService.showPage(ctx)
+    }
+})
+bot.action(/^textList/, async ctx => {
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        await textService.showPage(ctx,+ctx.match[1])
+    }
+})
+bot.action(/^rhyme/, async ctx => {
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        await textService.showText(ctx)
+    }
+})
+bot.action(/^textSearchList/, async ctx => {
+    let fUser = await userService.getUser(ctx.from.username)
+    if (!fUser) {
+        await ctx.replyWithHTML(mainMenuTextDenied(ctx))
+    } else {
+        await textService.showSearchPage(ctx,+ctx.match[1])
+    }
+})
 bot.on('text', async ctx => {
     if (ctx.message.text.includes('?')) {
         await textService.showSearchPage(ctx)
     }
 })
 bot.action('home', async (ctx) => {
-    // console.log(ctx);
     let fUser = await userService.getUser(ctx.from.username)
     console.log(fUser);
     if (!ctx.callbackQuery) {
