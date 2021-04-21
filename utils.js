@@ -25,10 +25,21 @@ function createTextMsg (text) {
 function createTextMsgMarkdown (text) {
     if (!text) return false
     if (text.youtube != 'null'){
-        return `*${text.title}*\n${text.text}\nTags: ${text.tags.toString()}\nYOUTUBE : ${text.youtube}`
+        return `*${text.title}*\n ${replaceText(text.text)}\n Tags: ${text.tags.toString()}\nYOUTUBE : ${text.youtube}`
     } else {
         return `*${text.title}*\n${text.text}\nTags : ${text.tags.toString()}`
     }
+}
+function replaceText (text) {
+    return text
+        .replace(/\</g, "\\<")
+        .replace(/\>/g, "\\>")
+        .replace(/_/gi, "\\_")
+        .replace(/-/gi, "\\-")
+        .replace("~", "\\~")
+        .replace(/`/gi, "\\`")
+        .replace(/\./g, "\\.");
+
 }
 function paginate(array, page_size, page_number) {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
