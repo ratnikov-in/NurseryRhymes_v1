@@ -5,11 +5,8 @@ const Stage = require("telegraf/stage");
 const Markup = require('telegraf/markup')
 const Scene = require('telegraf/scenes/base')
 const Extra = require('telegraf/extra')
-// const {MenuTemplate, MenuMiddleware, createBackMainMenuButtons} = require('telegraf-inline-menu')
-// const {html: format} = require('telegram-format');
-// API TOKEN
-// const token = '1700465901:AAEZcKslUKO5Uf3Too20XihhpPdXS9TLURY' ratnikov.tech
-const token = '1737945044:AAEcLweBalvnVJX-FNRRNmEO_qJbLOYXWHI'
+
+const token = ''
 const bot = new Telegraf(token)
 // Сервисы взаимодействия с данными из БД
 const textService = require('./services/textService')
