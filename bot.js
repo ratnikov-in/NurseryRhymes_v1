@@ -6,7 +6,7 @@ const Markup = require('telegraf/markup')
 const Scene = require('telegraf/scenes/base')
 const Extra = require('telegraf/extra')
 
-const token = ''
+const token = '1737945044:AAEcLweBalvnVJX-FNRRNmEO_qJbLOYXWHI'
 const bot = new Telegraf(token)
 // Сервисы взаимодействия с данными из БД
 const textService = require('./services/textService')
